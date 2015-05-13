@@ -50,8 +50,8 @@ DallasTemperature sensors(&oneWire);
 DeviceAddress insideThermometer, outsideThermometer;
 bool requestTemp = true;
 
-char ssid[] = "ingo-9F24"; //  your network SSID (name)
-char pass[] = "Liljor&Lindar43";    // your network password (use for WPA, or use as key for WEP)
+char ssid[] = "ssid"; //  your network SSID (name)
+char pass[] = "password";    // your network password (use for WPA, or use as key for WEP)
 
 // Commands returned from server
 String waterOn = ("C=W_ON");
