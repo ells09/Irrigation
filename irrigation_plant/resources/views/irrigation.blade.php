@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3 panel panel-default">
-                <h3 class="panel-heading text-center">Temperatur 1</h3>
+                <h3 class="panel-heading text-center">Växthuset</h3>
                 <div class="panel-body">
                     <div class="pull-right">Max: <span class="max-temp"> {{ $measurement_data->maxTemp }} </span>&#x2103; </div>
                     <div class="pull-left">Min: <span class="min-temp"> {{ $measurement_data->minTemp }} </span>&#x2103; </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="col-md-3 panel panel-default">
-                <h3 class="panel-heading text-center">Temperatur 2</h3>
+                <h3 class="panel-heading text-center">Övervintringstältet</h3>
                 <div class="panel-body">
                     <div class="pull-right">Max: <span class="max-temp2"> {{ $measurement_data->maxTemp2 }} </span>&#x2103; </div>
                     <div class="pull-left">Min: <span class="min-temp2"> {{ $measurement_data->minTemp2 }} </span>&#x2103; </div>

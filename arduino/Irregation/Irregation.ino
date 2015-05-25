@@ -24,21 +24,12 @@
  by Ingvar
  */
 
-
 #include <SPI.h>
 #include <WiFi.h>
-#include "DHT.h"
+#include <DHT.h>
 #include "Hygrometer.h"
 #include <OneWire.h>
 #include <DallasTemperature.h>
-
-
-#define  DHTPIN 2
-#define  DHTTYPE DHT11
-#define  hygrometerInput A1
-#define ONE_WIRE_BUS 3
-#define TEMPERATURE_PRECISION 12
-#define WATER_PUMP 4
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
@@ -53,9 +44,6 @@ bool requestTemp = true;
 char ssid[] = "ssid"; //  your network SSID (name)
 char pass[] = "password";    // your network password (use for WPA, or use as key for WEP)
 
-// Commands returned from server
-String waterOn = ("C=W_ON");
-String serverCommand = ("");
 
 int hygrometerValue = 0;            
 int status = WL_IDLE_STATUS;
@@ -81,10 +69,8 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
-
   // Start DHT11
   dht.begin();
-  
   // check for the presence of the shield:
   if (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi shield not present");
@@ -116,7 +102,6 @@ void setup() {
 
 void loop() {
   int index=0;
-  
   pinMode(hygrometerInput, INPUT);
 
   // Only read temp once before we send it to the server
@@ -177,8 +162,8 @@ void printAddress(DeviceAddress deviceAddress)
 void printTemperature(DeviceAddress deviceAddress)
 {
   float tempC = sensors.getTempC(deviceAddress);
-  Serial.print("Temp C: ");
-  Serial.print(tempC);
+//  Serial.print("Temp C: ");
+//  Serial.print(tempC);
   // Serial.print(" Temp F: ");
   // Serial.print(DallasTemperature::toFahrenheit(tempC));
 }

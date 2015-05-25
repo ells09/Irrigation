@@ -39,11 +39,11 @@ $(function() {
             if ( $('.max-temp').text() < data.values[0]) {
                 $('.max-temp').text(data.values[0]);
             }
-            if ( $('.min-temp2').text() > data.values[0]) {
-                $('.min-temp2').text(data.values[0]);
+            if ( $('.min-temp2').text() > data.values[1]) {
+                $('.min-temp2').text(data.values[1]);
             }
-            if ( $('.max-temp2').text() < data.values[0]) {
-                $('.max-temp2').text(data.values[0]);
+            if ( $('.max-temp2').text() < data.values[1]) {
+                $('.max-temp2').text(data.values[1]);
             }
             if ( $('.min-humidity').text() > data.values[2]) {
                 $('.min-humidity').text(data.values[2]);
