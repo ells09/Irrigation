@@ -11,11 +11,11 @@
 |
 */
 
-//$app->get('/', function() use ($app) {
-//    return $app->welcome();
-//});
+Route::get('/', 'WelcomeController@index');
 
-$app->get('/', ['as' => 'home', 'uses' => 'App\Http\Controllers\Controller@show']);
-$app->get('/update', 'App\Http\Controllers\Controller@update');
-$app->get('changeType/{type}', 'App\Http\Controllers\Controller@changeType');
-$app->post('/', 'App\Http\Controllers\Controller@upload');
+Route::get('home', 'HomeController@index');
+
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
