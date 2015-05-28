@@ -138,6 +138,7 @@ return [
         "Khill\Lavacharts\Laravel\LavachartsServiceProvider",
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
+
 		/*
 		 * Application Service Providers...
 		 */

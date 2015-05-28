@@ -6290,3 +6290,7 @@ label,
 .checkbox label {
   font-weight: 300;
 }
+.gauge {
+  position: relative;
+  left: -30px;
+}
