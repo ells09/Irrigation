@@ -1,3 +1,7 @@
+#include <OneWire.h>
+
+#include <DHT.h>
+
 /*
   Web client
 
@@ -41,11 +45,11 @@ DallasTemperature sensors(&oneWire);
 DeviceAddress insideThermometer, outsideThermometer;
 bool requestTemp = true;
 
-char ssid[] = "ssid"; //  your network SSID (name)
-char pass[] = "password";    // your network password (use for WPA, or use as key for WEP)
+char ssid[] = "ingo-vh"; //  your network SSID (name)
+char pass[] = "Liljor&Lindar43";    // your network password (use for WPA, or use as key for WEP)
 
 
-int hygrometerValue = 0;            
+unsigned long hygrometerValue = 0;            
 int status = WL_IDLE_STATUS;
 
 char server[] = "www.ingvarkreft.se";    // name address for Google (using DNS)
@@ -238,9 +242,14 @@ TH getTempHumidity()
 
 int readHygrometer()
 {
-  hygrometerValue = analogRead(hygrometerInput);
-  hygrometerValue = constrain(hygrometerValue, 100, 1023);
-  hygrometerValue = map(hygrometerValue, 100, 1023, 100, 0);
+  byte i;
+  hygrometerValue = 0;
+  for (i=0; i < 100; i++) {
+    hygrometerValue += analogRead(hygrometerInput);
+  }
+  hygrometerValue /= 100L;
+  hygrometerValue = constrain(hygrometerValue, 100, 700);
+  hygrometerValue = map(hygrometerValue, 100, 700, 100, 0);
 }
 
 void printWifiStatus() {
