@@ -14,23 +14,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 panel panel-default">
-            <h3 class="panel-heading text-center">Växthuset</h3>
+            <h3 class="panel-heading text-center">Givare 1</h3>
             <div class="panel-body">
                 <div class="pull-right">Max: <span class="max-temp"> {{ $reports->maxTemp }} </span>&#x2103; </div>
                 <div class="pull-left">Min: <span class="min-temp"> {{ $reports->minTemp }} </span>&#x2103; </div>
                 <div class="gauge">
-                <div id="temp1_div"></div>
-                @gaugechart('Temp1', 'temp1_div')
+                    <div id="temp1_div"></div>
+                    @gaugechart('Temp1', 'temp1_div')
                 </div>
             </div>
 
         </div>
         <div class="col-md-3 panel panel-default">
-            <h3 class="panel-heading text-center">Övervintringstältet</h3>
+            <h3 class="panel-heading text-center">Givare 2</h3>
             <div class="panel-body">
                 <div class="pull-right">Max: <span class="max-temp2"> {{ $reports->maxTemp2 }} </span>&#x2103; </div>
                 <div class="pull-left">Min: <span class="min-temp2"> {{ $reports->minTemp2 }} </span>&#x2103; </div>
-                <h2 class="text-center actual-temp2"> {{ $reports->temperature2 }}&#x2103; </h2>
+                <div class="gauge">
+                    <div id="temp2_div"></div>
+                    @gaugechart('Temp2', 'temp2_div')
+                </div>
             </div>
         </div>
         <div class="col-md-3 panel panel-default">
@@ -38,7 +41,10 @@
             <div class="panel-body">
                 <div class="pull-right ">Max: <span class="max-humidity"> {{ $reports->maxHumi }} </span>%</div>
                 <div class="pull-left ">Min: <span class="min-humidity"> {{ $reports->minHumi }} </span>%</div>
-                <h2 class="text-center actual-humidity"> {{ $reports->humidity }}%</h2>
+                <div class="gauge">
+                    <div id="humi_div"></div>
+                    @gaugechart('Humi', 'humi_div')
+                </div>
             </div>
         </div>
         <div class="col-md-3 panel panel-default">
@@ -46,7 +52,10 @@
             <div class="panel-body">
                 <div class="pull-right ">Max: <span class="max-hygro"> {{ $reports->maxHygro }} </span>% </div>
                 <div class="pull-left ">Min: <span class="min-hygro"> {{ $reports->minHygro }} </span>% </div>
-                <h2 class="text-center actual-hygro"> {{ $reports->hygrometer }}% </h2>
+                <div class="gauge">
+                    <div id="hygro_div"></div>
+                    @gaugechart('Hygro', 'hygro_div')
+                </div>
             </div>
         </div>
     </div>

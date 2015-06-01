@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Khill\Lavacharts\Laravel;
 use App\reports;
 use Khill\Lavacharts;
@@ -37,66 +38,50 @@ class WelcomeController extends Controller {
 
       $temperatures = \Lava::DataTable();
       $temp1 = \Lava::DataTable();
+      $temp2 = \Lava::DataTable();
+      $humi = \Lava::DataTable();
+      $hygro = \Lava::DataTable();
       $reports = reports::all(['temperature_1', 'temperature_2', 'humidity', 'hygrometer', 'created_at'])->take(60);
    //   $temp1 = $reports[0]->temperature_1;
 
       $temperatures->addDateColumn('Date')
-        ->addNumberColumn('Växthus')
-        ->addNumberColumn('Tält')
+        ->addNumberColumn('Givare 1')
+        ->addNumberColumn('Givare 2')
         ->addNumberColumn('Luftfuktighet')
         ->addNumberColumn('Jordfuktighet');
       foreach ($reports as $key => $report) {
+          $dt = Carbon::parse($report->created_at);
           $temperatures->addRow(array($report->created_at, $report->temperature_1, $report->temperature_2, $report->humidity, $report->hygrometer));
       }
 
       $temp1->addStringColumn('Type')
         ->addNumberColumn('Value')
-        ->addRow(array('℃', 24.3));
+        ->addRow(array('℃', $report->temperature_1));
+      $temp2->addStringColumn('Type')
+        ->addNumberColumn('Value')
+        ->addRow(array('℃', $report->temperature_2));
+      $humi->addStringColumn('Type')
+        ->addNumberColumn('Value')
+        ->addRow(array('%', $report->humidity));
+      $hygro->addStringColumn('Type')
+        ->addNumberColumn('Value')
+        ->addRow(array('%', $report->hygrometer));
 
-      $gauge = \Lava::GaugeChart('Temp1')
-        ->setOptions(array(
-          'datatable' => $temp1,
-          'width' => 150,
-          'yellowColor' => '#0000ff',
-          'yellowFrom' => 0,
-          'yellowTo' => 10,
-          'greenFrom' => 10,
-          'greenTo' => 30,
-          'redFrom' => 30,
-          'redTo' => 40,
-          'max' => 40,
-          'majorTicks' => array(
-            'Kall',
-            'Normal',
-            'Het'
-          ),
-        ));
-/*
-      ->addRow(array('2014-10-1', 67, 65, 62))
-        ->addRow(array('2014-10-2', 68, 65, 61))
-        ->addRow(array('2014-10-3', 68, 62, 55))
-        ->addRow(array('2014-10-4', 72, 62, 52))
-        ->addRow(array('2014-10-5', 61, 54, 47))
-        ->addRow(array('2014-10-6', 70, 58, 45))
-        ->addRow(array('2014-10-7', 74, 70, 65))
-        ->addRow(array('2014-10-8', 75, 69, 62))
-        ->addRow(array('2014-10-9', 69, 63, 56))
-        ->addRow(array('2014-10-10', 64, 58, 52))
-        ->addRow(array('2014-10-11', 59, 55, 50))
-        ->addRow(array('2014-10-12', 65, 56, 46))
-        ->addRow(array('2014-10-13', 66, 56, 46))
-        ->addRow(array('2014-10-14', 75, 70, 64))
-        ->addRow(array('2014-10-15', 76, 72, 68))
-        ->addRow(array('2014-10-16', 71, 66, 60))
-        ->addRow(array('2014-10-17', 72, 66, 60))
-        ->addRow(array('2014-10-18', 63, 62, 62));
-*/
+      $gaugeTemp1 = $this->addDataTableTemp('Temp1', $temp1);
+      $gaugeTemp2 = $this->addDataTableTemp('Temp2', $temp2);
+      $gaugeHumi = $this->addDataTable('Humi', $humi);
+      $gaugeHygro = $this->addDataTable('Hygro', $hygro);
+
       $chartArea = \Lava::ChartArea(array(
         'left'   => '5%',
         'top'    => 10,
         'width'  => '80%',
         'height' => 400
       ));
+      $hAxis = \Lava::HorizontalAxis(array(
+        'format' => 'h:m',
+      ));
+
       $linechart = \Lava::LineChart('Temps')
           ->dataTable($temperatures)
           ->title('Den senaste timmen')
@@ -104,14 +89,15 @@ class WelcomeController extends Controller {
               'curveType' => 'function',
               'height' => 400,
               'chartArea' => $chartArea,
+              'hAxis' => $hAxis,
     ));
       $reportData = new \stdClass();
-      $reportData->maxTemp = 25;
-      $reportData->minTemp = 22;
-      $reportData->temperature = 24;
-      $reportData->maxTemp2 = 25;
-      $reportData->minTemp2 = 22;
-      $reportData->temperature2 = 24;
+      $reportData->maxTemp = 25.65;
+      $reportData->minTemp = 22.25;
+      $reportData->temperature = 24.5;
+      $reportData->maxTemp2 = 23.25;
+      $reportData->minTemp2 = 22.35;
+      $reportData->temperature2 = 24.45;
       $reportData->maxHygro = 25;
       $reportData->minHygro = 22;
       $reportData->hygrometer = 24;
@@ -120,7 +106,51 @@ class WelcomeController extends Controller {
       $reportData->humidity = 24;
 
 
-      return view('welcome', ['gauge' => $gauge, 'linechart' => $linechart, 'reports' => $reportData]);
+      return view('welcome', ['gaugeTemp1' => $gaugeTemp1, 'linechart' => $linechart, 'reports' => $reportData]);
 	}
+
+    private function addDataTableTemp ($name, $table) {
+        return \Lava::GaugeChart($name)
+            ->setOptions(array(
+                'datatable' => $table,
+                'width' => 150,
+                'yellowColor' => '#0000ff',
+                'yellowFrom' => 0,
+                'yellowTo' => 10,
+                'greenFrom' => 10,
+                'greenTo' => 30,
+                'redFrom' => 30,
+                'redTo' => 40,
+                'max' => 40,
+                'majorTicks' => array(
+                    'Kall',
+                    'Normal',
+                    'Het'
+                ),
+            )
+        );
+    }
+
+    private function addDataTable ($name, $table) {
+        return \Lava::GaugeChart($name)
+            ->setOptions(array(
+                'datatable' => $table,
+                'width' => 150,
+                'yellowColor' => '#0000ff',
+                'yellowFrom' => 0,
+                'yellowTo' => 30,
+                'greenFrom' => 30,
+                'greenTo' => 70,
+                'redFrom' => 70,
+                'redTo' => 100,
+                'max' => 100,
+                'majorTicks' => array(
+                    'Torr',
+                    'Normal',
+                    'Blöt'
+                ),
+            )
+        );
+    }
 
 }

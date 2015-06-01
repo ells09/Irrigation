@@ -23,6 +23,8 @@
 		}
 	},
 	"autoload-dev": {
+        "files": [
+            "app/Http/ChartHelpers.php"],
 		"classmap": [
 			"tests/TestCase.php"
 		]
