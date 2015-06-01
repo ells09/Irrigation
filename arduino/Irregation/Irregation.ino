@@ -45,8 +45,8 @@ DallasTemperature sensors(&oneWire);
 DeviceAddress insideThermometer, outsideThermometer;
 bool requestTemp = true;
 
-char ssid[] = "ingo-vh"; //  your network SSID (name)
-char pass[] = "Liljor&Lindar43";    // your network password (use for WPA, or use as key for WEP)
+char ssid[] = "ssid"; //  your network SSID (name)
+char pass[] = "password";    // your network password (use for WPA, or use as key for WEP)
 
 
 unsigned long hygrometerValue = 0;            
