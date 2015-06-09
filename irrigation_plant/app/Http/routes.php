@@ -12,12 +12,12 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('update/{format?}', 'WelcomeController@update');
 
-Route::get('home', 'HomeController@index');
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);
 // Display all SQL executed in Eloquent
 /*

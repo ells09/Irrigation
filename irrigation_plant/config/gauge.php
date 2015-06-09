@@ -10,8 +10,9 @@ return [
 
     'gauges' => [
         'Temp1' => [
-            'Title' => 'Ute',
+            'Title' => 'Jordtemperatur',
             'unit' => '℃',
+            'databaseColumnName' => 'temperature',
             'options' => [
                 'datatable' => '',
                 'width' => 150,
@@ -33,6 +34,7 @@ return [
         'Temp2' => [
             'Title' => 'Växthus',
             'unit' => '℃',
+            'databaseColumnName' => 'temperature2',
             'options' => [
                 'datatable' => '',
                 'width' => 150,
@@ -54,6 +56,7 @@ return [
         'Humidity' => [
             'Title' => 'Luftfuktighet',
             'unit' => '%',
+            'databaseColumnName' => 'humidity',
             'options' => [
                 'datatable' => '',
                 'width' => 150,
@@ -75,6 +78,7 @@ return [
         'Hygrometer' => [
             'Title' => 'Jordfuktighet',
             'unit' => '%',
+            'databaseColumnName' => 'hygrometer',
             'options' => [
                 'datatable' => '',
                 'width' => 150,

@@ -32,8 +32,6 @@ class generateGaugeChartCommand extends Command implements SelfHandling {
 
         foreach (Config('gauge.gauges') as $key => $gauge) {
             $name = "gauge" . $key;
-            //$max = "max" . $key;
-            //$min = "min" . $key;
             $$name = new ChartHelpers($key, $gauge['unit']);
             $$name->generateGaugeChart()->addGaugeChartTemplate($gauge);
             $reportData->$key = new \stdClass();

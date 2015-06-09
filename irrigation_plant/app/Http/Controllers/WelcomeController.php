@@ -2,11 +2,11 @@
 
 use App\Commands\generateLineChartCommand;
 use App\Commands;
-use App\Http\ChartHelpers;
 
 
 class WelcomeController extends Controller
 {
+    use Commands\ChartTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,18 @@ class WelcomeController extends Controller
 
 //        dd($reportData);
 
-        return view('welcome', [ 'reports' => $reportData]);
+        return view('welcome', ['reports' => $reportData]);
+    }
+
+    public function update($format)
+    {
+        $this->setPresentationFormat($format);
+
+        $updateLineChartData = $this->dispatch(new Commands\updateLineChartCommand());
+        $updateGaugeChartData = $this->dispatch(new Commands\updateGaugeChartCommand());
+        $updateGaugeChartData['lineChart']['data'] = $updateLineChartData;
+
+        return $updateGaugeChartData;
     }
 
 }
