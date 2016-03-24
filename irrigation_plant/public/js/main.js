@@ -14813,7 +14813,7 @@ module.exports = Vue;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _canvGauge = require('canv-gauge');
@@ -14823,30 +14823,11 @@ var _canvGauge2 = _interopRequireDefault(_canvGauge);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  template: '<canvas id="{{ gid }}" data-type="canv-gauge" width="200" height="200"></canvas>',
+    template: '<canvas id="gauge_{{ gid }}" ' + 'data-type="canv-gauge" ' + 'data-highlights="{{ highlights }}"' + 'width="150" height="150"></canvas>',
 
-  props: ['gid', 'values'],
+    props: ['gid', 'values', 'highlights'],
 
-  ready: function ready() {
-    //  var data = {
-    //    labels: this.labels,
-    //    datasets: [
-    //    {
-    //      fillColor: "rgba(220,220,220,0.2)",
-    //      strokeColor: "rgba(220,220,220,1)",
-    //      pointColor: "rgba(220,220,220,1)",
-    //      pointStrokeColor: "#fff",
-    //      pointHighlightFill: "#fff",
-    //      pointHighliteStroke: "rgba(220,220,220,1)",
-    //      data: this.values
-    //    }
-    //    ]
-    //  }
-
-    //  new Chart(
-    //    this.$el.getContext('2d')
-    //   ).context).Line(data);
-  }
+    ready: function ready() {}
 };
 
 },{"canv-gauge":1}],6:[function(require,module,exports){
@@ -14906,7 +14887,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 new _vue2.default({
   el: 'body',
 
-  components: { Graph: _Graph2.default, Gauge: _Gauge2.default }
+  components: { Graph: _Graph2.default, Gauge: _Gauge2.default },
+
+  ready: function ready() {
+    console.log('ready');
+    //gauge.Collection.get(1).setValue( 54.3);
+  }
 });
 
 },{"./components/Gauge":5,"./components/Graph":6,"vue":4}]},{},[7]);

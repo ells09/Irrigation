@@ -7,3 +7,9 @@ body {
 	margin: 10px;
 }
 
+.gauge {
+	display: flex;
+	span {
+		margin-left: -22px;
+	}
+}
