@@ -11,18 +11,10 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-Route::get('update/{format?}', 'WelcomeController@update');
+Route::group(['middleware' => ['web']], function () {
 
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-Route::controllers([
-    'auth' => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-]);
-// Display all SQL executed in Eloquent
-/*
-Event::listen('illuminate.query', function($query)
-{
-    var_dump($query);
 });
-*/
