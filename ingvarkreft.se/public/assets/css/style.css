@@ -6547,6 +6547,6 @@ button.close {
     font-size: 63px;
   }
 }
-div#slider span.add-on {
-  display: inline-block;
+body {
+  background-color: #00558;
 }

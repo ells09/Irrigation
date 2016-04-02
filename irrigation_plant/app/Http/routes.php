@@ -18,3 +18,5 @@ Route::group(['middleware' => ['web']], function () {
     });
 
 });
+
+Route::get('update', 'Controller@update');
