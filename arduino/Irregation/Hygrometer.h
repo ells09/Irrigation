@@ -5,6 +5,9 @@
 #define ONE_WIRE_BUS 3
 #define TEMPERATURE_PRECISION 12
 #define WATER_PUMP 4
+#define NEXA_TEMP 6
+#define NEXA_FAN 5
+#define NEXA_LIGHT 4
 
 //struct TH {
 //  float  celsius;

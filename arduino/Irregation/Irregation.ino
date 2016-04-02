@@ -1,3 +1,5 @@
+#include <NewRemoteTransmitter.h>
+
 #include <DallasTemperature.h>
 
 #include <DHT.h>
@@ -49,7 +51,7 @@ DallasTemperature sensors(&oneWire);
 DeviceAddress insideThermometer, outsideThermometer;
 bool requestTemp = true;
 
-char ssid[] = "ingo-9F24"; //  your network SSID (name)
+char ssid[] = "ingo-vh"; //  your network SSID (name)
 char pass[] = "Liljor&Lindar43";    // your network password (use for WPA, or use as key for WEP)
 
 
@@ -66,7 +68,11 @@ WiFiClient client;
 unsigned long lastConnectionTime = 0;            // last time you connected to the server, in milliseconds
 const unsigned long postingInterval = 60L * 1000L; // delay between updates, in milliseconds
 
+NewRemoteTransmitter garden(14356842, 4, 260, 3);
+
+
 void setup() {
+  
   pinMode(hygrometerInput, INPUT);
   pinMode(WATER_PUMP, OUTPUT);
   digitalWrite(WATER_PUMP, LOW);
@@ -126,6 +132,9 @@ void loop() {
   // if 60 seconds have passed since your last connection,
   // then connect again and send data:
   if (millis() - lastConnectionTime > postingInterval) {
+    //Serial.println("Nexa learn");
+    //garden.sendUnit(6, true);
+    
     temp3 = htu.readTemperature();
     hum2 = htu.readHumidity();
 
@@ -140,6 +149,23 @@ void loop() {
     httpRequest(content);
     analogReference(DEFAULT);
     requestTemp = true;
+    if (temp1 < 15.0)
+    {
+      Serial.println("NEXA_TEMP on");
+      garden.sendUnit(NEXA_TEMP, true);
+    } else if(temp1 > 16.0){
+      Serial.println("NEXA_TEMP off");
+      garden.sendUnit(NEXA_TEMP, false);
+    }
+    if (hum2 > 60.0)
+    {
+      Serial.println("NEXA_FAN on");
+      garden.sendUnit(NEXA_FAN, true);
+    } else 
+    {
+      Serial.println("NEXA_FAN off");
+      garden.sendUnit(NEXA_FAN, false);
+    }
   }
 
   // Check for server response
@@ -150,11 +176,11 @@ void loop() {
       serverCommand += c;
       index++;
       if (waterOn == serverCommand) {
-        digitalWrite(WATER_PUMP, HIGH);
+       // digitalWrite(WATER_PUMP, HIGH);
         Serial.println("water on");
         serverCommand = "";
         delay(1000);
-        digitalWrite(WATER_PUMP, LOW);
+       // digitalWrite(WATER_PUMP, LOW);
       }
     }
     else {
