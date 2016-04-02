@@ -4,12 +4,15 @@
 
 $(function() {
     setInterval(function(){
-        $.getJSON('/update', function (dataTableJson) {
-            lava.loadData('lineChart', dataTableJson, function (chart) {
-                console.log(chart);
+        $.getJSON('/update/hour', function (dataTableJson) {
+            $.each(dataTableJson, function (index, value) {
+                lava.loadData(index, value.data, function (chart) {
+                    $('.'+index).find('.min-temp').text(value.min);
+                    $('.'+index).find('.max-temp').text(value.max);
+                });
             });
         });
-    }, 600000);
+    }, 60000);
     $( ".show-type" ).change(function() {
         var selectedDiagramType = $('input[name=diagramType]:checked', '#selectDiagram').val()
         $.get('/changeType/' + selectedDiagramType, function (response){
