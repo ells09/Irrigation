@@ -16372,14 +16372,15 @@ var _chart2 = _interopRequireDefault(_chart);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  template: '<canvas width="1200" height="400" id="graph"></canvas>',
+  template: '<canvas width="1200" height="400" id="graph"></canvas><legend>',
 
   props: ['labels', 'values'],
 
   data: function data() {
     return {
       GraphData: [19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1],
-      chart: ''
+      chart: '',
+      legend: ''
     };
   },
 
@@ -16450,8 +16451,8 @@ exports.default = {
       scaleStartValue: 0
 
     });
-    var legend = this.chart.generateLegend();
-    this.$broadcast('Graph_legend', this.chart.generateLegend());
+    this.legend = this.chart.generateLegend();
+    this.$dispatch('legend', this.legend);
   }
 };
 
@@ -16513,10 +16514,19 @@ new _vue2.default({
     el: 'body',
 
     data: {
-        GraphData: ''
+        GraphData: '',
+        legend: 'hej'
     },
 
     components: { Graph: _Graph2.default, Gauge: _Gauge2.default, Legend: _Legend2.default },
+
+    events: {
+        'legend': function legend(msg) {
+            // `this` in event callbacks are automatically bound
+            // to the instance that registered it
+            this.legend = msg;
+        }
+    },
 
     ready: function ready() {
         var self = this;
@@ -16535,14 +16545,12 @@ new _vue2.default({
                 response.headers('expires');
 
                 // set data on vm
-                this.$set('GraphData', response.data);
-                // self.Graph_data;
                 this.$broadcast('Graph_data', response.data);
             }, function (response) {
 
                 // error callback
             });
-        }, 600000);
+        }, 60000);
     }
 });
 

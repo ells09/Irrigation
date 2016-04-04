@@ -13,9 +13,18 @@ new Vue({
 
     data: {
         GraphData: '',
+        legend: 'hej',
     },
 
   components: { Graph, Gauge, Legend },
+
+    events: {
+        'legend': function (msg) {
+            // `this` in event callbacks are automatically bound
+            // to the instance that registered it
+            this.legend = msg
+        }
+    },
 
   ready: function() {
       var self = this;
@@ -34,8 +43,6 @@ new Vue({
               response.headers('expires');
 
               // set data on vm
-              this.$set('GraphData', response.data)
-             // self.Graph_data;
               this.$broadcast('Graph_data', response.data)
 
           }, function (response) {
@@ -43,6 +50,6 @@ new Vue({
               // error callback
           });
 
-      }, 600000);
+      }, 60000);
   }
 })
