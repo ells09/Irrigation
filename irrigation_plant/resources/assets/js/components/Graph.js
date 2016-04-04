@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 
 export default {
-  template: '<canvas width="1200" height="400" id="graph"></canvas>',
+  template: '<canvas width="1200" height="400" id="graph"></canvas><legend>',
 
   props: ['labels', 'values'],
 
@@ -9,6 +9,7 @@ export default {
     return {
       GraphData: [19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,],
       chart: '',
+      legend: '',
     }
   },
 
@@ -27,7 +28,7 @@ export default {
         }
       this.chart.update();
     }
-  } ,
+  },
 
   ready() {
     var data = {
@@ -84,8 +85,8 @@ export default {
               scaleStartValue : 0
 
     });
-    var legend = this.chart.generateLegend();
-    this.$broadcast('Graph_legend', this.chart.generateLegend());
+    this.legend = this.chart.generateLegend();
+    this.$dispatch('legend', this.legend);
 
   }
 }

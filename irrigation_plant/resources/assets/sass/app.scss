@@ -13,3 +13,14 @@ body {
 		margin-left: -22px;
 	}
 }
+.graph {
+	ul li {
+		list-style: none;
+		span {
+			width: 10px;
+			height: 10px;
+			display: inline-block;
+			margin-right: 10px;
+		}
+	}
+}
