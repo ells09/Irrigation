@@ -16372,13 +16372,13 @@ var _chart2 = _interopRequireDefault(_chart);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  template: '<canvas width="1200" height="400" id="graph"></canvas><legend>',
+  template: '<canvas width="1200" height="400" id="graph"></canvas>',
 
   props: ['labels', 'values'],
 
   data: function data() {
     return {
-      GraphData: [19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1, 19, 20, 21, 1, 1, 1, 1, 1, 1, 1],
+      GraphData: [11],
       chart: '',
       legend: ''
     };
@@ -16386,18 +16386,15 @@ exports.default = {
 
   events: {
     'Graph_data': function Graph_data(data) {
+      var self = this;
       this.GraphData = data;
-      //this.chart.addData('22', "April")
-      var i = 0;
-      while (i < data['temp1'].length) {
-        this.chart.datasets[0].points[i].value = data['temp1'][i];
-        this.chart.datasets[1].points[i].value = data['temp2'][i];
-        this.chart.datasets[2].points[i].value = data['humidity'][i];
-        this.chart.datasets[3].points[i].value = data['hygrometer'][i];
-        this.labels[i] = data['labels'][i];
-        i++;
+      while (this.chart.datasets[0].points.length) {
+        this.chart.removeData();
       }
-      this.chart.update();
+
+      this.GraphData.data.forEach(function (points, label) {
+        self.chart.addData(points[0], points[1]);
+      });
     }
   },
 
@@ -16515,7 +16512,8 @@ new _vue2.default({
 
     data: {
         GraphData: '',
-        legend: 'hej'
+        legend: 'hej',
+        command: 'hour'
     },
 
     components: { Graph: _Graph2.default, Gauge: _Gauge2.default, Legend: _Legend2.default },
@@ -16528,12 +16526,23 @@ new _vue2.default({
         }
     },
 
-    ready: function ready() {
-        var self = this;
-        setInterval(function () {
+    methods: {
+        getDay: function getDay() {
+            this.command = 'day';
+        },
+        getHour: function getHour() {
+            this.command = 'hour';
+        },
+        getLastHour: function getLastHour() {
+            this.command = 'lastHour';
+        },
+        getLastMinute: function getLastMinute() {
+            this.command = 'lastMinute';
+        },
 
+        update: function update() {
             // GET request
-            self.$http.get('/update').then(function (response) {
+            this.$http.get('/update/' + this.command).then(function (response) {
 
                 // get status
                 response.status;
@@ -16550,6 +16559,16 @@ new _vue2.default({
 
                 // error callback
             });
+        }
+    },
+
+    ready: function ready() {
+        var self = this;
+
+        this.update();
+        this.command = 'lastMinute';
+        setInterval(function () {
+            self.update();
         }, 60000);
     }
 });
