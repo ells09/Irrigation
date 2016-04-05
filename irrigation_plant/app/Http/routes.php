@@ -10,6 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+/*
+\Illuminate\Support\Facades\DB::listen(function($query) {
+    var_dump($query->sql, $query->bindings);
+});
+*/
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -19,4 +24,7 @@ Route::group(['middleware' => ['web']], function () {
 
 });
 
-Route::get('update', 'Controller@update');
+Route::get('update/day', 'Controller@getDay');
+Route::get('update/hour', 'Controller@getHour');
+Route::get('update/lastHour', 'Controller@getLastHour');
+Route::get('update/lastMinute', 'Controller@getLastMinute');

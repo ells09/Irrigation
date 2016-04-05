@@ -1,13 +1,13 @@
 import Chart from 'chart.js';
 
 export default {
-  template: '<canvas width="1200" height="400" id="graph"></canvas><legend>',
+  template: '<canvas width="1200" height="400" id="graph"></canvas>',
 
   props: ['labels', 'values'],
 
   data: function(){
     return {
-      GraphData: [19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,19,20,21,1,1,1,1,1,1,1,],
+      GraphData: [11,],
       chart: '',
       legend: '',
     }
@@ -15,18 +15,15 @@ export default {
 
   events: {
     'Graph_data': function(data) {
+      var self = this;
       this.GraphData = data;
-      //this.chart.addData('22', "April")
-      var i = 0;
-      while (i < data['temp1'].length) {
-          this.chart.datasets[0].points[i].value = data['temp1'][i];
-          this.chart.datasets[1].points[i].value = data['temp2'][i];
-          this.chart.datasets[2].points[i].value = data['humidity'][i];
-          this.chart.datasets[3].points[i].value = data['hygrometer'][i];
-          this.labels[i] = data['labels'][i];
-        i++;
-        }
-      this.chart.update();
+      while (this.chart.datasets[0].points.length) {
+        this.chart.removeData();
+      }
+
+      this.GraphData.data.forEach (function(points, label) {
+        self.chart.addData(points[0], points[1])
+      });
     }
   },
 
