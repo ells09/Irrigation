@@ -20,6 +20,27 @@ class Controller extends BaseController
         Carbon::setLocale('sv');
     }
 
+    public function index(Measured $measured)
+    {
+        $rows = $measured->orderBy('created_at', 'desc')->take(60)->get();
+
+        foreach ($rows as $row) {
+            $dataSet_1[] = $row->temperature_1;
+            $dataSet_2[] = $row->temperature_2;
+            $dataSet_3[] = $row->humidity;
+            $dataSet_4[] = $row->hygrometer;
+            $labels[] = $row->created_at->format('H:i');
+        }
+        $values = collect([
+            array_reverse($dataSet_1),
+            array_reverse($dataSet_2),
+            array_reverse($dataSet_3),
+            array_reverse($dataSet_4),
+        ]);
+        $labels = collect(array_reverse($labels));
+        return view('welcome', compact('values', 'labels'));
+    }
+
     public function getHour(Measured $measured)
     {
         $data = $measured->orderBy('created_at', 'desc')->take(60)->get();
@@ -54,6 +75,8 @@ class Controller extends BaseController
                 $item->created_at->format('H:i')
             ];
         }
+        $return['minTemp1'] = $measured->orderBy('created_at', 'desc')->take(60)->min('temperature_1');
+        $return['maxTemp1'] = $measured->orderBy('created_at', 'desc')->take(60)->max('temperature_1');
 
         return $return;
 

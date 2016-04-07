@@ -55,7 +55,7 @@ new Vue({
                 response.headers('expires');
 
                 // set data on vm
-                this.$broadcast('Graph_data', response.data)
+                this.$broadcast('Graph_' + this.command, response.data)
 
             }, function (response) {
 
@@ -68,7 +68,7 @@ new Vue({
   ready: function() {
       var self = this;
 
-      this.update();
+      //this.update();
       this.command = 'lastMinute'
       setInterval( function() {
             self.update();
