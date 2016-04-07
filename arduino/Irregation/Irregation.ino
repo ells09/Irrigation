@@ -8,6 +8,8 @@
 #include <Adafruit_HTU21DF.h>
 #include <OneWire.h>
 
+#include <avr/wdt.h>
+
 /*
   Web client
 
@@ -82,6 +84,8 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
+    Serial.println("Start!");
+
   if (!htu.begin()) {
     Serial.println("Couldn't find sensor!");
     while (1);
@@ -112,6 +116,7 @@ void setup() {
   // set the resolution to 12 bit
   sensors.setResolution(insideThermometer, TEMPERATURE_PRECISION);
   sensors.setResolution(outsideThermometer, TEMPERATURE_PRECISION);
+  wdt_enable(WDTO_8S);
 
 }
 
@@ -121,6 +126,7 @@ void loop() {
   float temp3;
   float hum2;
   pinMode(hygrometerInput, INPUT);
+  wdt_reset();
 
   // Only read temp once before we send it to the server
   if (requestTemp) {
@@ -149,15 +155,15 @@ void loop() {
     httpRequest(content);
     analogReference(DEFAULT);
     requestTemp = true;
-    if (temp1 < 15.0)
+    if (temp1 < 13.0)
     {
       Serial.println("NEXA_TEMP on");
       garden.sendUnit(NEXA_TEMP, true);
-    } else if(temp1 > 16.0){
+    } else if(temp1 > 14.0){
       Serial.println("NEXA_TEMP off");
       garden.sendUnit(NEXA_TEMP, false);
     }
-    if (hum2 > 60.0)
+    if ((hum2 > 60.0 && temp1 > 16.0) || temp1 > 20.0)
     {
       Serial.println("NEXA_FAN on");
       garden.sendUnit(NEXA_FAN, true);
@@ -172,15 +178,18 @@ void loop() {
   while (client.available()) {
     char c = client.read();
     //Serial.print(c);
-    if (c == waterOn.charAt(index)) {
+    if (c == lightOn.charAt(index) || c == lightOff.charAt(index)) {
+    //Serial.print(c);
       serverCommand += c;
       index++;
-      if (waterOn == serverCommand) {
-       // digitalWrite(WATER_PUMP, HIGH);
-        Serial.println("water on");
+      if (lightOn == serverCommand) {
+        //Serial.println(serverCommand);
+        garden.sendUnit(NEXA_LIGHT, true);
         serverCommand = "";
-        delay(1000);
-       // digitalWrite(WATER_PUMP, LOW);
+      } else if (lightOff == serverCommand) {
+        Serial.println(serverCommand);
+        garden.sendUnit(NEXA_LIGHT, false);
+        serverCommand = "";
       }
     }
     else {

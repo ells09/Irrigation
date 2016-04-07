@@ -17,6 +17,9 @@
 
 // Commands returned from server
 String waterOn = ("C=W_ON");
+String lightOn = ("C=L_ON");
+String lightOff = ("C=L_OFF");
+
 String serverCommand = ("");
 
 
