@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 
 export default {
-  template: '<canvas width="1200" height="400" id="graph"></canvas>',
+  template: '<canvas width="1200" height="400" v-el:canvas></canvas>',
 
   props: ['labels', 'values'],
 
@@ -14,13 +14,45 @@ export default {
   },
 
   events: {
-    'Graph_data': function(data) {
+    'Graph_day': function(data) {
       var self = this;
       this.GraphData = data;
       while (this.chart.datasets[0].points.length) {
         this.chart.removeData();
       }
 
+      this.GraphData.data.forEach (function(points, label) {
+        self.chart.addData(points[0], points[1])
+      });
+    },
+    'Graph_hour': function(data) {
+      var self = this;
+      this.GraphData = data;
+      while (this.chart.datasets[0].points.length) {
+        this.chart.removeData();
+      }
+
+      this.GraphData.data.forEach (function(points, label) {
+        self.chart.addData(points[0], points[1])
+      });
+    },
+    'Graph_lastHour': function(data) {
+      var self = this;
+      this.GraphData = data;
+      while (this.chart.datasets[0].points.length) {
+        this.chart.removeData();
+      }
+
+      this.GraphData.data.forEach (function(points, label) {
+        self.chart.addData(points[0], points[1])
+      });
+    },
+    'Graph_lastMinute': function(data) {
+      var self = this;
+
+      this.GraphData = data;
+
+      this.chart.removeData();
       this.GraphData.data.forEach (function(points, label) {
         self.chart.addData(points[0], points[1])
       });
@@ -39,7 +71,7 @@ export default {
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighliteStroke: "rgba(255,220,220,1)",
-        data: this.GraphData
+        data: this.values[0]
       },
       {
         label: 'Temperatur 2',
@@ -49,7 +81,7 @@ export default {
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighliteStroke: "rgba(220,220,255,1)",
-        data: this.GraphData
+        data: this.values[1]
       },
         {
           label: 'humidity',
@@ -59,7 +91,7 @@ export default {
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighliteStroke: "rgba(255,255,220,1)",
-          data: this.GraphData
+          data: this.values[2]
         },
         {
           label: 'hygrometer',
@@ -69,19 +101,29 @@ export default {
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighliteStroke: "rgba(220,255,220,1)",
-          data: this.GraphData
+          data: this.values[3]
         }
       ]
     }
-    var context = document.querySelector('#graph').getContext('2d');
 
-    this.chart = new Chart(context).Line(data, {
+    this.chart = new Chart(
+        this.$els.canvas.getContext('2d')
+    ).Line(data, {
       scaleOverride : true,
-              scaleSteps : 10,
-              scaleStepWidth : 10,
-              scaleStartValue : 0
+      scaleSteps : 10,
+      scaleStepWidth : 10,
+      scaleStartValue : 0
 
     });
+    //var context = document.querySelector('#graph').getContext('2d');
+    //
+    //this.chart = new Chart(context).Line(data, {
+    //  scaleOverride : true,
+    //          scaleSteps : 10,
+    //          scaleStepWidth : 10,
+    //          scaleStartValue : 0
+    //
+    //});
     this.legend = this.chart.generateLegend();
     this.$dispatch('legend', this.legend);
 
