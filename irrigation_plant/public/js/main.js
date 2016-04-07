@@ -16372,7 +16372,7 @@ var _chart2 = _interopRequireDefault(_chart);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  template: '<canvas width="1200" height="400" id="graph"></canvas>',
+  template: '<canvas width="1200" height="400" v-el:canvas></canvas>',
 
   props: ['labels', 'values'],
 
@@ -16385,13 +16385,45 @@ exports.default = {
   },
 
   events: {
-    'Graph_data': function Graph_data(data) {
+    'Graph_day': function Graph_day(data) {
       var self = this;
       this.GraphData = data;
       while (this.chart.datasets[0].points.length) {
         this.chart.removeData();
       }
 
+      this.GraphData.data.forEach(function (points, label) {
+        self.chart.addData(points[0], points[1]);
+      });
+    },
+    'Graph_hour': function Graph_hour(data) {
+      var self = this;
+      this.GraphData = data;
+      while (this.chart.datasets[0].points.length) {
+        this.chart.removeData();
+      }
+
+      this.GraphData.data.forEach(function (points, label) {
+        self.chart.addData(points[0], points[1]);
+      });
+    },
+    'Graph_lastHour': function Graph_lastHour(data) {
+      var self = this;
+      this.GraphData = data;
+      while (this.chart.datasets[0].points.length) {
+        this.chart.removeData();
+      }
+
+      this.GraphData.data.forEach(function (points, label) {
+        self.chart.addData(points[0], points[1]);
+      });
+    },
+    'Graph_lastMinute': function Graph_lastMinute(data) {
+      var self = this;
+
+      this.GraphData = data;
+
+      this.chart.removeData();
       this.GraphData.data.forEach(function (points, label) {
         self.chart.addData(points[0], points[1]);
       });
@@ -16409,7 +16441,7 @@ exports.default = {
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighliteStroke: "rgba(255,220,220,1)",
-        data: this.GraphData
+        data: this.values[0]
       }, {
         label: 'Temperatur 2',
         fillColor: "rgba(220,220,255,0.2)",
@@ -16418,7 +16450,7 @@ exports.default = {
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighliteStroke: "rgba(220,220,255,1)",
-        data: this.GraphData
+        data: this.values[1]
       }, {
         label: 'humidity',
         fillColor: "rgba(255,255,220,0.2)",
@@ -16427,7 +16459,7 @@ exports.default = {
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighliteStroke: "rgba(255,255,220,1)",
-        data: this.GraphData
+        data: this.values[2]
       }, {
         label: 'hygrometer',
         fillColor: "rgba(220,255,220,0.2)",
@@ -16436,18 +16468,26 @@ exports.default = {
         pointStrokeColor: "#fff",
         pointHighlightFill: "#fff",
         pointHighliteStroke: "rgba(220,255,220,1)",
-        data: this.GraphData
+        data: this.values[3]
       }]
     };
-    var context = document.querySelector('#graph').getContext('2d');
 
-    this.chart = new _chart2.default(context).Line(data, {
+    this.chart = new _chart2.default(this.$els.canvas.getContext('2d')).Line(data, {
       scaleOverride: true,
       scaleSteps: 10,
       scaleStepWidth: 10,
       scaleStartValue: 0
 
     });
+    //var context = document.querySelector('#graph').getContext('2d');
+    //
+    //this.chart = new Chart(context).Line(data, {
+    //  scaleOverride : true,
+    //          scaleSteps : 10,
+    //          scaleStepWidth : 10,
+    //          scaleStartValue : 0
+    //
+    //});
     this.legend = this.chart.generateLegend();
     this.$dispatch('legend', this.legend);
   }
@@ -16554,7 +16594,7 @@ new _vue2.default({
                 response.headers('expires');
 
                 // set data on vm
-                this.$broadcast('Graph_data', response.data);
+                this.$broadcast('Graph_' + this.command, response.data);
             }, function (response) {
 
                 // error callback
@@ -16565,7 +16605,7 @@ new _vue2.default({
     ready: function ready() {
         var self = this;
 
-        this.update();
+        //this.update();
         this.command = 'lastMinute';
         setInterval(function () {
             self.update();
