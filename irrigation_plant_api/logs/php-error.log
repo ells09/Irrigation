@@ -1,0 +1,19 @@
+[31-Oct-2013 13:28:42] PHP Notice:  Request from 199.59.156.150 blocked (User-Agent: BOT/0.1 (BOT for JCE)), contact support@binero.se if you think this was done in error in /storage/content/98/110398/ingvarkreft.se/settings/includes.php on line 177
+[31-Oct-2013 13:33:43] PHP Notice:  Request from 199.59.156.150 blocked (User-Agent: BOT/0.1 (BOT for JCE)), contact support@binero.se if you think this was done in error in /storage/content/98/110398/ingvarkreft.se/settings/includes.php on line 177
+[05-May-2015 16:25:44 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[05-May-2015 16:25:44 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[05-May-2015 16:25:44 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[05-May-2015 16:27:17 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[05-May-2015 16:28:17 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[05-May-2015 16:28:20 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[05-May-2015 23:16:09 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[06-May-2015 02:18:18 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[06-May-2015 04:46:37 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[06-May-2015 04:46:37 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[06-May-2015 04:50:09 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[06-May-2015 07:12:56 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[06-May-2015 08:29:09 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[06-May-2015 10:29:10 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[' in /storage/content/98/110398/ingvarkreft.se/vendor/illuminate/support/helpers.php on line 365
+[07-May-2015 09:41:47 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[', expecting ')' in /storage/content/98/110398/ingvarkreft.se/bootstrap/app.php on line 61
+[07-May-2015 09:41:51 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[', expecting ')' in /storage/content/98/110398/ingvarkreft.se/bootstrap/app.php on line 61
+[07-May-2015 09:41:51 Europe/Stockholm] PHP Parse error:  syntax error, unexpected '[', expecting ')' in /storage/content/98/110398/ingvarkreft.se/bootstrap/app.php on line 61
