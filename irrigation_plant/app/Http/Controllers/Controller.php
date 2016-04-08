@@ -62,21 +62,28 @@ class Controller extends BaseController
 
     public function getLastMinute (Measured $measured)
     {
-        $data = $measured->orderBy('created_at', 'desc')->take(1)->get();
+        //$data = $measured->orderBy('created_at', 'desc')->take(1)->get();
+        $data = $measured->latest()->first();
 
-        foreach ($data as $item) {
-            $return['data'][] = [
-                [
-                    $item->temperature_1,
-                    $item->temperature_2,
-                    $item->humidity,
-                    $item->hygrometer,
-                ],
-                $item->created_at->format('H:i')
-            ];
-        }
-        $return['minTemp1'] = $measured->orderBy('created_at', 'desc')->take(60)->min('temperature_1');
-        $return['maxTemp1'] = $measured->orderBy('created_at', 'desc')->take(60)->max('temperature_1');
+        $return['data'][] = [
+            [
+                $data->temperature_1,
+                $data->temperature_2,
+                $data->humidity,
+                $data->hygrometer,
+            ],
+            $data->created_at->format('H:i')
+        ];
+        $id = $data->id - 60;
+
+        $return['minTemp1'] = $measured->where('id', '>', $id)->min('temperature_1');
+        $return['maxTemp1'] = $measured->where('id', '>', $id)->max('temperature_1');
+        $return['minTemp2'] = $measured->where('id', '>', $id)->min('temperature_2');
+        $return['maxTemp2'] = $measured->where('id', '>', $id)->max('temperature_2');
+        $return['minHumidity'] = $measured->where('id', '>', $id)->min('humidity');
+        $return['maxHumidity'] = $measured->where('id', '>', $id)->max('humidity');
+        $return['minHygrometer'] = $measured->where('id', '>', $id)->min('hygrometer');
+        $return['maxHygrometer'] = $measured->where('id', '>', $id)->max('hygrometer');
 
         return $return;
 
