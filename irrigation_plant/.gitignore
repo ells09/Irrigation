@@ -1,6 +1,7 @@
 /vendor
 /node_modules
 .env
+.idea 
 
 public/css/app.css
 composer.lock
