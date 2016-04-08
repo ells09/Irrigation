@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 import Graph from './components/Graph';
-import Gauge from './components/Gauge';
+import GaugePanel from './components/GaugePanel';
+//import Gauge from './components/Gauge';
 import Legend from './components/Legend';
 
 Vue.use(VueResource);
@@ -17,7 +18,7 @@ new Vue({
         command: 'hour',
     },
 
-  components: { Graph, Gauge, Legend },
+  components: { Graph, GaugePanel, Legend },
 
     events: {
         'legend': function (msg) {

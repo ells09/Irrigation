@@ -10,26 +10,10 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-3 panel panel-default">
-            <h3 class="panel-heading text-center">Temperatur 1</h3>
-            <div class="panel-body">
-                <div class="pull-right">Max: <span class="max-temp">33 </span>℃</div>
-                <div class="pull-left">Min: <span class="min-temp">13</span>℃</div>
-                <div class="gauge">
-                    <span>
-                        <gauge
-                                :gid=1
-                                highlights="0 10 #0033ff, 10 30 #00ff33, 30 40 #ff3300"
-                                data-units="℃"
-                                data-major-ticks="0 20 40"
-                                data-min-value="0"
-                                data-max-value="40"
-                                data-value=22
-                        ></gauge>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <gauge-panel title="Temperatur 1" :id="1" :min="10" :max="30"></gauge-panel>
+        <gauge-panel title="Temperatur 2" :id="2" :min="10" :max="30"></gauge-panel>
+        <gauge-panel title="Luftfuktighet" :id="3" :min="10" :max="30"></gauge-panel>
+        <gauge-panel title="Jordfuktighet" :id="4" :min="10" :max="30"></gauge-panel>
 
         <div class="col-md-3 panel panel-default">
             <h3 class="panel-heading text-center">Temperatur 2</h3>
@@ -40,6 +24,8 @@
                     <span>
                         <gauge
                                 :gid=2
+                                :min=11
+                                :max=31
                                 highlights="0 10 #0033ff, 10 30 #00ff33, 30 40 #ff3300"
                                 data-units="℃"
                                 data-major-ticks="0 20 40"

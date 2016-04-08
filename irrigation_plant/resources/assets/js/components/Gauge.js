@@ -6,7 +6,7 @@ export default {
       'data-highlights="{{ highlights }}"' +
       'width="150" height="150"></canvas>',
 
-  props: ['gid', 'values', 'highlights'],
+  props: ['gid', 'values', 'highlights', 'min', 'max'],
 
   ready() {
   }

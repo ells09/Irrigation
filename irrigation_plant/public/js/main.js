@@ -16353,12 +16353,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     template: '<canvas id="gauge_{{ gid }}" ' + 'data-type="canv-gauge" ' + 'data-highlights="{{ highlights }}"' + 'width="150" height="150"></canvas>',
 
-    props: ['gid', 'values', 'highlights'],
+    props: ['gid', 'values', 'highlights', 'min', 'max'],
 
     ready: function ready() {}
 };
 
 },{"canv-gauge":1}],30:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Gauge = require('./Gauge');
+
+var _Gauge2 = _interopRequireDefault(_Gauge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: { Gauge: _Gauge2.default },
+
+    props: ['title', 'id', 'min', 'max'],
+
+    template: '<div class="col-md-3 panel panel-default">' + '<h3 class="panel-heading text-center">{{ title }}</h3>' + '<div class="panel-body">' + '<div class="pull-right">Max: <span class="max-temp">{{ max }} </span>℃</div>' + '<div class="pull-left">Min: <span class="min-temp">{{ min }}</span>℃</div>' + '<div class="gauge">' + '<span>' + '<gauge' + ' :gid={{ id }}' + ' highlights="0 10 #0033ff, 10 30 #00ff33, 30 40 #ff3300"' + ' data-units="℃"' + ' data-major-ticks="0 20 40"' + ' data-min-value="0"' + ' data-max-value="40"' + ' data-value=22' + '></gauge>' + '</span>' + '</div>' + '</div>' + '</div>'
+
+}; /**
+    * Created by inkre1 on 2016-04-08.
+    */
+
+},{"./Gauge":29}],31:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16493,7 +16517,7 @@ exports.default = {
   }
 };
 
-},{"chart.js":2}],31:[function(require,module,exports){
+},{"chart.js":2}],32:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16518,7 +16542,7 @@ exports.default = {
     }
 };
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -16533,9 +16557,9 @@ var _Graph = require('./components/Graph');
 
 var _Graph2 = _interopRequireDefault(_Graph);
 
-var _Gauge = require('./components/Gauge');
+var _GaugePanel = require('./components/GaugePanel');
 
-var _Gauge2 = _interopRequireDefault(_Gauge);
+var _GaugePanel2 = _interopRequireDefault(_GaugePanel);
 
 var _Legend = require('./components/Legend');
 
@@ -16547,6 +16571,8 @@ _vue2.default.use(_vueResource2.default);
 
 // Initialize HTTP requests
 //http.init(Vue)
+
+//import Gauge from './components/Gauge';
 new _vue2.default({
     el: 'body',
 
@@ -16556,7 +16582,7 @@ new _vue2.default({
         command: 'hour'
     },
 
-    components: { Graph: _Graph2.default, Gauge: _Gauge2.default, Legend: _Legend2.default },
+    components: { Graph: _Graph2.default, GaugePanel: _GaugePanel2.default, Legend: _Legend2.default },
 
     events: {
         'legend': function legend(msg) {
@@ -16613,6 +16639,6 @@ new _vue2.default({
     }
 });
 
-},{"./components/Gauge":29,"./components/Graph":30,"./components/Legend":31,"vue":28,"vue-resource":17}]},{},[32]);
+},{"./components/GaugePanel":30,"./components/Graph":31,"./components/Legend":32,"vue":28,"vue-resource":17}]},{},[33]);
 
 //# sourceMappingURL=main.js.map
