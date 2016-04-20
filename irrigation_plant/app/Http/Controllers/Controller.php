@@ -62,6 +62,14 @@ class Controller extends BaseController
 
     public function getLastMinute (Measured $measured)
     {
+        $test = $measured->lastDay()
+            ->selectRaw('HOUR(created_at) as hour, avg(temperature_1) as temp1')
+            ->selectRaw('HOUR(created_at) as hour, avg(temperature_2) as temp2')
+            ->selectRaw('HOUR(created_at) as hour, avg(humidity) as humidity')
+            ->selectRaw('HOUR(created_at) as hour, avg(hygrometer) as hygrometer')
+            ->groupBy('hour')->get();
+            //->pluck('temp1', 'hour');
+
         //$data = $measured->orderBy('created_at', 'desc')->take(1)->get();
         $data = $measured->latest()->first();
 

@@ -57,6 +57,7 @@ new Vue({
 
                 // set data on vm
                 this.$broadcast('Graph_' + this.command, response.data)
+                this.$broadcast('Gauge_1', response.data)
 
             }, function (response) {
 

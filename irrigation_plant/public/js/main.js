@@ -16351,10 +16351,15 @@ var _canvGauge2 = _interopRequireDefault(_canvGauge);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    template: '<canvas id="gauge_{{ gid }}" ' + 'data-type="canv-gauge" ' + 'data-highlights="{{ highlights }}"' + 'width="150" height="150"></canvas>',
+    template: '<canvas v-el:gauge_{{gid}} id="gauge_{{ gid }}" ' + 'data-type="canv-gauge" ' + 'data-highlights="{{ highlights }}"' + 'width="150" height="150"></canvas>',
 
     props: ['gid', 'values', 'highlights', 'min', 'max'],
 
+    events: {
+        'Gauge_{{gid}}': function Gauge_Gid(data) {
+            this.$els.setValue(44.0);
+        }
+    },
     ready: function ready() {}
 };
 
@@ -16374,9 +16379,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     components: { Gauge: _Gauge2.default },
 
-    props: ['title', 'id', 'min', 'max'],
+    props: ['title', 'id', 'min', 'max', 'highlights', 'units', 'majorticks', 'minvalue', 'maxvalue', 'value'],
 
-    template: '<div class="col-md-3 panel panel-default">' + '<h3 class="panel-heading text-center">{{ title }}</h3>' + '<div class="panel-body">' + '<div class="pull-right">Max: <span class="max-temp">{{ max }} </span>℃</div>' + '<div class="pull-left">Min: <span class="min-temp">{{ min }}</span>℃</div>' + '<div class="gauge">' + '<span>' + '<gauge' + ' :gid={{ id }}' + ' highlights="0 10 #0033ff, 10 30 #00ff33, 30 40 #ff3300"' + ' data-units="℃"' + ' data-major-ticks="0 20 40"' + ' data-min-value="0"' + ' data-max-value="40"' + ' data-value=22' + '></gauge>' + '</span>' + '</div>' + '</div>' + '</div>'
+    data: function data() {
+        return {
+            nvalue: this.value
+        };
+    },
+
+    template: '<div class="col-md-3 panel panel-default">' + '<h3 class="panel-heading text-center">{{ title }}</h3>' + '<div class="panel-body">' + '<div class="pull-right">Max: <span class="max-temp">{{ max }} </span>℃</div>' + '<div class="pull-left">Min: <span class="min-temp">{{ min }}</span>℃</div>' + '<div class="gauge"><span><gauge :gid=id :highlights="highlights" data-units="{{units}}" data-major-ticks="{{majorticks}}" data-min-value="{{minvalue}}" data-max-value="{{maxvalue}}" data-value={{nvalue}}></gauge></span> </div>' + '</div>' + '</div>'
 
 }; /**
     * Created by inkre1 on 2016-04-08.
@@ -16621,6 +16632,7 @@ new _vue2.default({
 
                 // set data on vm
                 this.$broadcast('Graph_' + this.command, response.data);
+                this.$broadcast('Gauge_1', response.data);
             }, function (response) {
 
                 // error callback
